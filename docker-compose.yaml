@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: surb-service
+      PGDATA: /var/lib/postgres/data
+    volumes:
+      # - ./data/pg:/data/postgres
+      - .docker/dbdata:/var/lib/postgres/data
