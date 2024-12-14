@@ -5,41 +5,41 @@ import { Injectable } from '@nestjs/common'
 @Injectable()
 export class AppEnvService implements IAppEnvService {
   constructor(private readonly configService: ConfigService) {}
-  getDbType(): string {
+  getDbType(): string | undefined {
     return this.configService.get<string>('DB_TYPE')
   }
-  getDbHost(): string {
+  getDbHost(): string | undefined {
     return this.configService.get<string>('DB_HOST')
   }
-  getDbPort(): number {
+  getDbPort(): number | undefined {
     return Number(this.configService.get<number>('DB_PORT'))
   }
-  getDbUserName(): string {
+  getDbUserName(): string | undefined {
     return this.configService.get<string>('DB_USER_NAME')
   }
-  getDbPassword(): string {
+  getDbPassword(): string | undefined {
     return this.configService.get<string>('DB_PASSWORD')
   }
-  getDatabase(): string {
+  getDatabase(): string | undefined {
     return this.configService.get<string>('DB_DATABASE')
   }
-  getDbAutoLoadEntities(): boolean {
+  getDbAutoLoadEntities(): boolean | undefined {
     return this.configService.get<boolean>('DB_AUTO_LOAD_ENTITIES')
   }
-  getDbSynchonize(): boolean {
+  getDbSynchonize(): boolean | undefined {
     return this.configService.get<boolean>('DB_SYNCHRONIZE')
   }
 
   getAppPort(): number {
     return Number(this.configService.get<number>('APP_PORT', { infer: true }))
   }
-  getNodeEnv(): string {
+  getNodeEnv(): string | undefined {
     return this.configService.get<string>('NODE_ENV')
   }
-  getJwtSecret(): string {
+  getJwtSecret(): string | undefined {
     return this.configService.get<string>('JWT_SECRET')
   }
-  getJwtExpiresInSeconds(): number {
+  getJwtExpiresInSeconds(): number | undefined {
     return Number(this.configService.get<number>('JWT_EXPIRES_IN'))
   }
 }

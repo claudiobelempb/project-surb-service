@@ -1,5 +1,6 @@
-import { ZodValidationPipe } from '@/shared/infra/common/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/shared/utils/pipes/zod-validation-pipe'
 import { UserCreateService } from '@/user/application/services/user-create.service'
+import { UserEntity } from '@/user/domain/entities/user.entity'
 import {
   Body,
   Controller,
@@ -8,26 +9,16 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common'
-
-import { z } from 'zod'
-
-const createUserSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.string().email(),
-  password: z.string(),
-})
-
-type CreateUserType = z.infer<typeof createUserSchema>
+import { UserSchema } from '../schema/user.schema'
 
 @Controller('admin/users')
 export class UserCreateController {
   constructor(private readonly userCreateService: UserCreateService) {}
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @UsePipes(new ZodValidationPipe(createUserSchema))
-  async handle(@Body() body: CreateUserType) {
-    // const { firstName, lastName, email, password } = body
-    this.userCreateService.execute(body)
+  @UsePipes(new ZodValidationPipe(UserSchema.create))
+  async handle(@Body() body: UserSchema.Create): Promise<UserEntity> {
+    return this.userCreateService.execute(body)
   }
 }

@@ -34,7 +34,7 @@
 
 ## JWT
 
-- npm i @nestjs/jwt
+npm i @nestjs/jwt @nestjs/passport
 
 ## Docker
 

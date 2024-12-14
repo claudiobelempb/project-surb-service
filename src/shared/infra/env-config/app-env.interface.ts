@@ -1,16 +1,14 @@
-import { AppValidationEnvType } from './app-validation-env'
-
 export type IAppEnvService = {
-  getAppPort(): number
-  getNodeEnv(): string
-  getJwtSecret(): string
-  getJwtExpiresInSeconds(): number
-  getDbType(): string
-  getDbHost(): string
-  getDbPort(): number
-  getDbUserName(): string
-  getDbPassword(): string
-  getDatabase(): string
-  getDbAutoLoadEntities(): boolean
-  getDbSynchonize(): boolean
+  getAppPort(): number | undefined
+  getNodeEnv(): string | undefined
+  getJwtSecret(): string | undefined
+  getJwtExpiresInSeconds(): number | undefined
+  getDbType(): string | undefined
+  getDbHost(): string | undefined
+  getDbPort(): number | undefined
+  getDbUserName(): string | undefined
+  getDbPassword(): string | undefined
+  getDatabase(): string | undefined
+  getDbAutoLoadEntities(): boolean | undefined
+  getDbSynchonize(): boolean | undefined
 }
