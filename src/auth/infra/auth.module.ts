@@ -1,14 +1,10 @@
+import { AppEnvModule } from '@/shared/infra/env-config/app-env.module'
 import { AppEnvService } from '@/shared/infra/env-config/app-env.service'
-import {
-  appValidationEnvSchema,
-  AppValidationEnvType,
-} from '@/shared/infra/env-config/app-validation-env'
 import { Module } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { AuthService } from '../application/services/auth.service'
-import { AppEnvModule } from '@/shared/infra/env-config/app-env.module'
+import { AuthController } from './controlllers/auth.controller'
 
 @Module({
   imports: [
@@ -17,15 +13,19 @@ import { AppEnvModule } from '@/shared/infra/env-config/app-env.module'
     JwtModule.registerAsync({
       imports: [AppEnvModule],
       inject: [AppEnvService],
-      useFactory(config: AppEnvService) {
-        const secret = config.getJwtSecret()
+      useFactory(env: AppEnvService) {
         return {
-          secret,
+          privateKey: Buffer.from(env.geJwtPrivateKey(), 'base64'),
+          publicKey: Buffer.from(env.geJwtPublicKey(), 'base64'),
+          signOptions: {
+            algorithm: 'RS256',
+            expiresIn: env.getJwtExpiresInSeconds(),
+          },
         }
       },
     }),
   ],
   providers: [AuthService],
-  controllers: [],
+  controllers: [AuthController],
 })
 export class AuthModule {}

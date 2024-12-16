@@ -5,44 +5,62 @@ import { IAppEnvService } from './app-env.interface'
 @Injectable()
 export class AppEnvService implements IAppEnvService {
   constructor(private readonly config: ConfigService) {}
-  getDbType(): string | undefined {
-    return this.config.get<string>('DB_TYPE', { infer: true })
+  geJwtPrivateKey(): string {
+    return this.config.get<string>('JWT_PRIVATE_KEY', {
+      infer: true,
+    }) as string
   }
-  getDbUrl(): string | undefined {
-    return this.config.get<string>('DATABASE_URL', { infer: true })
+  geJwtPublicKey(): string {
+    return this.config.get<string>('JWT_PUBLIC_KEY', {
+      infer: true,
+    }) as string
   }
-  getDbHost(): string | undefined {
-    return this.config.get<string>('DB_HOST', { infer: true })
+  getDbType(): string {
+    return this.config.get<string>('DB_TYPE', { infer: true }) as string
   }
-  getDbPort(): number | undefined {
-    return Number(this.config.get<number>('DB_PORT', { infer: true }))
+  getDbUrl(): string {
+    return this.config.get<string>('DATABASE_URL', { infer: true }) as string
   }
-  getDbUserName(): string | undefined {
-    return this.config.get<string>('DB_USER_NAME', { infer: true })
+  getDbHost(): string {
+    return this.config.get<string>('DB_HOST', { infer: true }) as string
   }
-  getDbPassword(): string | undefined {
-    return this.config.get<string>('DB_PASSWORD', { infer: true })
+  getDbPort(): number {
+    return Number(this.config.get<number>('DB_PORT', { infer: true })) as number
   }
-  getDatabase(): string | undefined {
-    return this.config.get<string>('DB_DATABASE', { infer: true })
+  getDbUserName(): string {
+    return this.config.get<string>('DB_USER_NAME', { infer: true }) as string
   }
-  getDbAutoLoadEntities(): boolean | undefined {
-    return this.config.get<boolean>('DB_AUTO_LOAD_ENTITIES', { infer: true })
+  getDbPassword(): string {
+    return this.config.get<string>('DB_PASSWORD', { infer: true }) as string
   }
-  getDbSynchonize(): boolean | undefined {
-    return this.config.get<boolean>('DB_SYNCHRONIZE', { infer: true })
+  getDatabase(): string {
+    return this.config.get<string>('DB_DATABASE', { infer: true }) as string
+  }
+  getDbAutoLoadEntities(): boolean {
+    return this.config.get<boolean>('DB_AUTO_LOAD_ENTITIES', {
+      infer: true,
+    }) as boolean
+  }
+  getDbSynchonize(): boolean {
+    return this.config.get<boolean>('DB_SYNCHRONIZE', {
+      infer: true,
+    }) as boolean
   }
 
   getAppPort(): number {
-    return Number(this.config.get<number>('APP_PORT', { infer: true }))
+    return Number(
+      this.config.get<number>('APP_PORT', { infer: true }),
+    ) as number
   }
-  getNodeEnv(): string | undefined {
-    return this.config.get<string>('NODE_ENV', { infer: true })
+  getNodeEnv(): string {
+    return this.config.get<string>('NODE_ENV', { infer: true }) as string
   }
-  getJwtSecret(): string | undefined {
-    return this.config.get<string>('JWT_SECRET', { infer: true })
+  getJwtSecret(): string {
+    return this.config.get<string>('JWT_SECRET', { infer: true }) as string
   }
-  getJwtExpiresInSeconds(): number | undefined {
-    return Number(this.config.get<number>('JWT_EXPIRES_IN', { infer: true }))
+  getJwtExpiresInSeconds(): number {
+    return Number(
+      this.config.get<number>('JWT_EXPIRES_IN', { infer: true }),
+    ) as number
   }
 }
