@@ -7,19 +7,25 @@ import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
+import { AuthService } from '../application/services/auth.service'
+import { AppEnvModule } from '@/shared/infra/env-config/app-env.module'
 
 @Module({
   imports: [
+    AppEnvModule,
     PassportModule,
     JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory(config: ConfigService<AppValidationEnvType, true>) {
-        console.log(config.get('JWT_SECRET', { infer: true }))
-        return {}
+      imports: [AppEnvModule],
+      inject: [AppEnvService],
+      useFactory(config: AppEnvService) {
+        const secret = config.getJwtSecret()
+        return {
+          secret,
+        }
       },
     }),
   ],
-  providers: [],
+  providers: [AuthService],
   controllers: [],
 })
 export class AuthModule {}

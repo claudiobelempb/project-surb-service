@@ -5,6 +5,7 @@ export type IAppEnvService = {
   getJwtExpiresInSeconds(): number | undefined
   getDbType(): string | undefined
   getDbHost(): string | undefined
+  getDbUrl(): string | undefined
   getDbPort(): number | undefined
   getDbUserName(): string | undefined
   getDbPassword(): string | undefined
