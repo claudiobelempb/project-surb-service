@@ -5,6 +5,7 @@ import { AppValidationExceptionFilter } from './shared/domain/exceptions/filters
 import { AppBadRequestExceptionFilter } from './shared/infra/exeptions/filters/AppBadRequestExceptionFilter'
 import { InvalidCredentialsExeptionFilter } from './shared/infra/exeptions/filters/AppInvalidCredentialsExceptioFilter'
 import { InvalidPasswordExceptionFilter } from './shared/infra/exeptions/filters/AppInvalidPasswordExceptionFilter'
+import { AppUnauthorizedExceptionFilter } from './shared/domain/exceptions/filters/AppUnauthorizedExceptionFilter'
 
 export function AppConfig(app: INestApplication) {
   app.setGlobalPrefix('api/v1')
@@ -15,5 +16,6 @@ export function AppConfig(app: INestApplication) {
     new InvalidCredentialsExeptionFilter(),
     new AppValidationExceptionFilter(),
     new AppBadRequestExceptionFilter(),
+    new AppUnauthorizedExceptionFilter(),
   )
 }

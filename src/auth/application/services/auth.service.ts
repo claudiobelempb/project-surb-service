@@ -2,25 +2,25 @@ import { AppEnvService } from '@/shared/infra/env-config/app-env.service'
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 
-type GenerateJwtProps = {
-  accessToken: string
+export type GenerateJwtProps = {
+  access_token: string
 }
 
 @Injectable()
 export class AuthService {
   constructor(
-    private jwtService: JwtService,
-    private configService: AppEnvService,
+    private readonly jwt: JwtService,
+    private readonly env: AppEnvService,
   ) {}
 
   async generateJwt(userId: string): Promise<GenerateJwtProps> {
-    const accessToken = await this.jwtService.signAsync({ id: userId }, {})
-    return { accessToken }
+    const accessToken = await this.jwt.signAsync({ sub: userId }, {})
+    return { access_token: accessToken }
   }
 
   async verifyJwt(token: string) {
-    return this.jwtService.verifyAsync(token, {
-      secret: this.configService.getJwtSecret(),
+    return this.jwt.verifyAsync(token, {
+      secret: this.env.getJwtSecret(),
     })
   }
 }

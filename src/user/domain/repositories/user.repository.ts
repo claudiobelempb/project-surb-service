@@ -1,15 +1,23 @@
 import { AppConflictException } from '@/shared/domain/exceptions/AppConflictException'
 import { IPaginationParams } from '@/shared/domain/interfaces/pagnation-params'
-import { IRepositoryContract } from '@/shared/domain/repositories/repository-contracts'
 import { PrismaService } from '@/shared/infra/database/prisma/prima.service'
 import { ConstantException } from '@/shared/utils/constants/ConstantException'
 import { UserEntity } from '../entities/user.entity'
-import { AppBadRequestException } from '@/shared/infra/exeptions/AppBadRequestException'
+import { IUserRepository } from './IUserRepository'
 
-export class UserPrismaRepository implements IRepositoryContract<UserEntity> {
+export class UserPrismaRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async userWithSmaeEmail(email: string): Promise<void> {
+  async findByEmail(email: string): Promise<UserEntity> {
+    const entity = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    })
+    return { ...entity }
+  }
+
+  async userWithSameEmail(email: string): Promise<void> {
     const entity = await this.prisma.user.findUnique({
       where: { email },
     })
@@ -30,12 +38,13 @@ export class UserPrismaRepository implements IRepositoryContract<UserEntity> {
     })
   }
 
-  async show(id: string): Promise<any> {
-    return await this.prisma.user.findUnique({
+  async findById(id: string): Promise<UserEntity> {
+    const entity = await this.prisma.user.findUnique({
       where: {
         id,
       },
     })
+    return { ...entity }
   }
 
   async index({ page }: IPaginationParams): Promise<UserEntity[]> {

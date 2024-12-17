@@ -13,7 +13,7 @@ export class UserCreateService {
     if (!firstName || !lastName || !email || !password) {
       throw new AppBadRequestException('Input data not provided')
     }
-    await this.userRepository.userWithSmaeEmail(email)
+    await this.userRepository.userWithSameEmail(email)
     const hashPassword = await this.hashProvider.generateHash(password)
 
     return this.userRepository.create({
