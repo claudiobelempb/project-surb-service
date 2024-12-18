@@ -2,7 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { ConstantException } from 'src/shared/utils/constants/ConstantException'
 import { AppBadRequestException } from '../AppBadRequestException'
-import { StandarError } from 'src/shared/utils/exceptions/StandarError'
+import { StandarError } from '@/shared/application/exceptions/StandarError'
 
 @Catch(AppBadRequestException)
 export class AppBadRequestExceptionFilter implements ExceptionFilter {

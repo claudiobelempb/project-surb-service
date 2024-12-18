@@ -7,10 +7,11 @@ import { UserCreateController } from './controllers/user-create.controller'
 import { UserAuthController } from './controllers/user-auth.controller'
 import { AuthModule } from '@/auth/infra/auth.module'
 import { UserAuthService } from '../application/services/user-auth.service'
+import { UserIndexController } from './controllers/user-index.controller'
 
 @Module({
   imports: [AuthModule],
-  controllers: [UserCreateController, UserAuthController],
+  controllers: [UserCreateController, UserAuthController, UserIndexController],
   providers: [
     {
       provide: 'PrismaService',

@@ -1,4 +1,5 @@
-import { ZodValidationPipe } from '@/shared/utils/pipes/zod-validation-pipe'
+import { JwtGuard } from '@/auth/application/guards/jwt.guard'
+import { ZodValidationPipe } from '@/shared/application/pipes/zod-validation-pipe'
 import { UserCreateService } from '@/user/application/services/user-create.service'
 import { UserEntity } from '@/user/domain/entities/user.entity'
 import {
@@ -7,11 +8,13 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common'
 import { UserSchema } from '../schema/user.schema'
 
 @Controller('admin/users')
+@UseGuards(JwtGuard)
 export class UserCreateController {
   constructor(private readonly userCreateService: UserCreateService) {}
 

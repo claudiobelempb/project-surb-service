@@ -1,7 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common'
 import { Response } from 'express'
 import { ConstantException } from 'src/shared/utils/constants/ConstantException'
-import { StandarError } from 'src/shared/utils/exceptions/StandarError'
+import { StandarError } from '@/shared/application/exceptions/StandarError'
 import { AppConflictException } from '../AppConflictException'
 import { AppUnauthorizedException } from '../AppUnauthorizedException'
 

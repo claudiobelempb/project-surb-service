@@ -2,7 +2,7 @@ import {
   AuthService,
   GenerateJwtProps,
 } from '@/auth/application/services/auth.service'
-import { ZodValidationPipe } from '@/shared/utils/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/shared/application/pipes/zod-validation-pipe'
 import { UserAuthService } from '@/user/application/services/user-auth.service'
 import { UserEntity } from '@/user/domain/entities/user.entity'
 import { Body, Controller, Post, UsePipes } from '@nestjs/common'

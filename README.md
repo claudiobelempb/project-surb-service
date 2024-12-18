@@ -34,7 +34,14 @@
 
 ## JWT
 
-npm i @nestjs/jwt @nestjs/passport
+npm i @nestjs/jwt
+npm i @nestjs/passport
+
+npm i passport-jwt
+npm i @types/passport-jwt -D
+
+npm i passport-local
+npm i @types/passport-local -D
 
 ## Docker
 

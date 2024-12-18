@@ -1,4 +1,4 @@
-import { FieldErrors } from 'src/shared/application/validation/validator.interface'
+import { FieldErrors } from '@/shared/application/interfaces/validator.interface'
 
 export class AppValidationException extends Error {
   constructor(public error: FieldErrors) {

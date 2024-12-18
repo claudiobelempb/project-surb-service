@@ -1,4 +1,4 @@
-import { IBcryptjs } from '@/shared/utils/hash.interface'
+import { IBcryptjs } from '@/shared/application/interfaces/hash.interface'
 import { compare, hash } from 'bcryptjs'
 export class HashProvider implements IBcryptjs {
   async generateHash(
