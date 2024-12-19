@@ -32,7 +32,7 @@ model User {
 
 model Time {
   id        String    @id @default(uuid()) @db.Uuid
-  anme      String    @db.VarChar()
+  name      String    @db.VarChar()
   isActive  Boolean   @default(true) @map("is_active") @db.Boolean
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp

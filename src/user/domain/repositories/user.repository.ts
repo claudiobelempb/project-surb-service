@@ -3,7 +3,7 @@ import { IPaginationParams } from '@/shared/domain/interfaces/pagnation-params'
 import { PrismaService } from '@/shared/infra/database/prisma/prima.service'
 import { ConstantException } from '@/shared/utils/constants/ConstantException'
 import { UserEntity } from '../entities/user.entity'
-import { IUserRepository } from './IUserRepository'
+import { IUserRepository } from './iuser-repository.interface'
 
 export class UserPrismaRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
