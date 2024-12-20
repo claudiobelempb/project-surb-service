@@ -1,4 +1,4 @@
-import { IPaginationParams } from '@/shared/domain/interfaces/pagnation-params'
+import { IPaginationParams } from '@/shared/domain/repositories/interfaces/iparams.interface'
 import { TimeEntity } from '../entities/TimeEntity'
 import { ITimeRepository } from './itime-repository.interface'
 import { PrismaService } from '@/shared/infra/database/prisma/prima.service'

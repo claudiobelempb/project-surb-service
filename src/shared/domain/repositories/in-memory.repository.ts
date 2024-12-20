@@ -1,6 +1,6 @@
 import { EntityDefault } from '../entities/default-entity'
 import { AppNotFoundException } from '../exceptions/AppNotFoundException'
-import { IRepository } from './irepository.interface'
+import { IRepository } from './interfaces/irepository.interface'
 
 export abstract class InMemoryRepository<E extends EntityDefault>
   implements IRepository<E>

@@ -13,6 +13,10 @@ export abstract class EntityDefault<T = any> {
     return this._id
   }
 
+  get props() {
+    return this._props
+  }
+
   toJSON(): Required<{ id: string } & T> {
     return {
       id: this._id,

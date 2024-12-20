@@ -1,5 +1,5 @@
 import { AppConflictException } from '@/shared/domain/exceptions/AppConflictException'
-import { IPaginationParams } from '@/shared/domain/interfaces/pagnation-params'
+import { IParams } from '@/shared/domain/repositories/interfaces/iparams.interface'
 import { PrismaService } from '@/shared/infra/database/prisma/prima.service'
 import { ConstantException } from '@/shared/utils/constants/ConstantException'
 import { UserEntity } from '../entities/user.entity'
@@ -7,6 +7,10 @@ import { IUserRepository } from './user-repository.interface'
 
 export class UserPrismaRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
+
+  async pagnation(params: any): Promise<any> {
+    throw new Error('Method not implemented.')
+  }
 
   async findByEmail(email: string): Promise<UserEntity> {
     // const entity = await this.prisma.user.findUnique({
@@ -49,7 +53,7 @@ export class UserPrismaRepository implements IUserRepository {
     throw new Error('Method not implemented.')
   }
 
-  async index({ page }: IPaginationParams): Promise<UserEntity[]> {
+  async index({ page }: IParams): Promise<UserEntity[]> {
     throw new Error('Method not implemented.')
     // return await this.prisma.user.findMany({
     //   orderBy: {
