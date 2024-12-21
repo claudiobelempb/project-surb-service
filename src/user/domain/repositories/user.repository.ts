@@ -1,14 +1,19 @@
 import { AppConflictException } from '@/shared/domain/exceptions/AppConflictException'
 import { IParams } from '@/shared/domain/repositories/interfaces/iparams.interface'
+import { PaginationRequest } from '@/shared/domain/repositories/pagination-request'
+import { PaginationResponse } from '@/shared/domain/repositories/pagination-response'
 import { PrismaService } from '@/shared/infra/database/prisma/prima.service'
 import { ConstantException } from '@/shared/utils/constants/ConstantException'
 import { UserEntity } from '../entities/user.entity'
 import { IUserRepository } from './user-repository.interface'
 
-export class UserPrismaRepository implements IUserRepository {
+export class UserRepository implements IUserRepository.IRepository {
+  sortableFields: string[] = []
   constructor(private readonly prisma: PrismaService) {}
 
-  async pagnation(params: any): Promise<any> {
+  pagination(
+    params: PaginationRequest<string>,
+  ): Promise<PaginationResponse<UserEntity, string>> {
     throw new Error('Method not implemented.')
   }
 

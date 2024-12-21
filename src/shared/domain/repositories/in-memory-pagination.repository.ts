@@ -1,17 +1,17 @@
-import { number } from 'zod'
 import { EntityDefault } from '../entities/default-entity'
 import { InMemoryRepository } from './in-memory.repository'
 import { IPagnation } from './interfaces/ipagnation.interface'
 import { PaginationRequest } from './pagination-request'
 import { PaginationResponse } from './pagination-response'
+import { PaginationFilter } from './types/repository.type'
 
 export abstract class InMemoryPagnationRepository<E extends EntityDefault>
   extends InMemoryRepository<E>
   implements IPagnation<E, any, any>
 {
   sortableFields: string[] = []
-  async pagnation(
-    request: PaginationRequest,
+  async pagination(
+    request: PaginationRequest<PaginationFilter>,
   ): Promise<PaginationResponse<E, string | undefined>> {
     const itemsFiltered = await this.applyFilter(
       this.items,
@@ -64,8 +64,8 @@ export abstract class InMemoryPagnationRepository<E extends EntityDefault>
 
   protected async applyPagination(
     items: E[],
-    page: PaginationRequest['page'],
-    perPage: PaginationRequest['perPage'],
+    page: PaginationRequest<PaginationFilter>['page'],
+    perPage: PaginationRequest<PaginationFilter>['perPage'],
   ): Promise<E[]> {
     const start = ((page as number) - 1) * perPage
     const limit = start + perPage

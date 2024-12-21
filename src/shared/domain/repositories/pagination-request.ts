@@ -1,20 +1,13 @@
-export type PaginationRequestDirection = 'asc' | 'desc'
-export type PaginationRequestProps<Filter = string> = {
-  page?: number
-  perPage?: number
-  sort?: string | null
-  sortDir?: PaginationRequestDirection | null
-  filter?: Filter | null
-}
+import { PaginationDirection, PaginationProps } from './types/repository.type'
 
-export class PaginationRequest<PaginationRequestFilter = string> {
+export class PaginationRequest<PaginationFilter> {
   protected _page: number | null | undefined
   protected _perPage = 15
   protected _sort: string | null | undefined
-  protected _sortDir: PaginationRequestDirection | null | undefined
-  protected _filter?: PaginationRequestFilter | null
+  protected _sortDir: PaginationDirection | null | undefined
+  protected _filter?: PaginationFilter | string | null | undefined
 
-  constructor(props: PaginationRequestProps<PaginationRequestFilter> = {}) {
+  constructor(props: PaginationProps<PaginationFilter> = {}) {
     this.page = props.page ? props.page : 0
     this.perPage = props.perPage ? props.perPage : 0
     this.sort = props.sort ? props.sort : null
@@ -59,7 +52,7 @@ export class PaginationRequest<PaginationRequestFilter = string> {
       value === null || value === undefined || value === '' ? null : `${value}`
   }
 
-  get sortDir(): PaginationRequestDirection | null | undefined {
+  get sortDir(): PaginationDirection | null | undefined {
     return this._sortDir
   }
 
@@ -72,14 +65,12 @@ export class PaginationRequest<PaginationRequestFilter = string> {
     this._sortDir = dir !== 'asc' && dir !== 'desc' ? 'desc' : dir
   }
 
-  get filter(): PaginationRequestFilter | null | undefined {
+  get filter(): PaginationFilter | string | null | undefined {
     return this._filter
   }
 
-  private set filter(value: PaginationRequestFilter | null) {
+  private set filter(value: PaginationFilter | null | string | undefined) {
     this._filter =
-      value === null || value === undefined || value === ''
-        ? null
-        : (`${value}` as any)
+      value === null || value === undefined || value === '' ? null : `${value}`
   }
 }

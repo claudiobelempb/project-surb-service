@@ -1,18 +1,5 @@
 import { EntityDefault } from '../entities/default-entity'
-
-export type PaginationResponseDirection = 'asc' | 'desc'
-export type PaginationResponseProps<
-  E extends EntityDefault,
-  PaginationResponseFilter,
-> = {
-  items: E[]
-  currentPage: number | null | undefined
-  perPage: number
-  sort: string | null | undefined
-  sortDir: string | null | undefined
-  filter: PaginationResponseFilter | null | undefined
-  total: number
-}
+import { PaginationResponseProps } from './types/repository.type'
 
 export class PaginationResponse<
   E extends EntityDefault,
