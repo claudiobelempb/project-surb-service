@@ -8,10 +8,7 @@ export type TimeProps = {
 }
 
 export class TimeEntity extends EntityDefault<TimeProps> {
-  constructor(
-    public readonly props: TimeProps,
-    id?: string,
-  ) {
+  constructor(props: TimeProps, id?: string) {
     super(props, id)
     this.props.isActive = props.isActive ?? true
     this.props.createdAt = props.createdAt ?? new Date()

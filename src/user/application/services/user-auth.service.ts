@@ -4,12 +4,12 @@ import { AppBadRequestException } from '@/shared/infra/exeptions/AppBadRequestEx
 import { AppInvalidCredentialsException } from '@/shared/infra/exeptions/AppInvalidCredentialsException'
 import { ConstantException } from '@/shared/utils/constants/ConstantException'
 import { UserEntity } from '@/user/domain/entities/user.entity'
-import { UserPrismaRepository } from '@/user/domain/repositories/user.repository'
+import { UserRepository } from '@/user/domain/repositories/user.repository'
 import { Body } from '@nestjs/common'
 
 export class UserAuthService {
   constructor(
-    private readonly userRepository: UserPrismaRepository,
+    private readonly userRepository: UserRepository,
     private readonly hashProvider: HashProvider,
   ) {}
 

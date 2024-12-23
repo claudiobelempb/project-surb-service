@@ -27,9 +27,10 @@ export class UserAuthController {
   async handle(
     @Body() body: AuthBodySchema,
   ): Promise<GenerateJwtProps | undefined> {
-    const entity = await this.userAuthService.execute(body)
-    if (entity.id) {
-      return await this.authService.generateJwt(entity.id)
-    }
+    // const entity = await this.userAuthService.execute()
+    // if (entity.id) {
+    //   return await this.authService.generateJwt(entity.id)
+    // }
+    return undefined
   }
 }

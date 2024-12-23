@@ -6,23 +6,23 @@ export class PaginationResponse<
   PaginationResponseFilter = string,
 > {
   readonly items: E[]
-  readonly currentPage: number | null | undefined
-  readonly perPage: number
-  readonly lastPage: number | null | undefined
-  readonly sort: string | null | undefined
-  readonly sortDir: string | null | undefined
-  readonly filter: PaginationResponseFilter | null | undefined
   readonly total: number
+  readonly currentPage: number
+  readonly perPage: number
+  readonly lastPage: number
+  readonly sort: string | null
+  readonly sortDir: string | null
+  readonly filter: PaginationResponseFilter | null
 
   constructor(props: PaginationResponseProps<E, PaginationResponseFilter>) {
     this.items = props.items
+    this.total = props.total
     this.currentPage = props.currentPage
     this.perPage = props.perPage
-    this.sort = props.sort
-    this.sortDir = props.sortDir
-    this.filter = props.filter
-    this.total = props.total
     this.lastPage = Math.ceil(this.total / this.perPage)
+    this.sort = props.sort ?? null
+    this.sortDir = props.sortDir ?? null
+    this.filter = props.filter ?? null
   }
 
   toJson(forceEntity = false) {

@@ -15,10 +15,10 @@ export type PaginationResponseProps<
   PaginationFilter,
 > = {
   items: E[]
-  currentPage: number | null | undefined
+  currentPage: number
   perPage: number
-  sort: string | null | undefined
-  sortDir: string | null | undefined
-  filter: PaginationFilter | null | undefined
+  sort: string
+  sortDir: string | null
+  filter: PaginationFilter | null
   total: number
 }

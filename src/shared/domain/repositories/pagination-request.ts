@@ -1,21 +1,21 @@
 import { PaginationDirection, PaginationProps } from './types/repository.type'
 
 export class PaginationRequest<PaginationFilter> {
-  protected _page: number | null | undefined
-  protected _perPage = 15
-  protected _sort: string | null | undefined
-  protected _sortDir: PaginationDirection | null | undefined
-  protected _filter?: PaginationFilter | string | null | undefined
+  protected _page: number
+  protected _perPage: number
+  protected _sort: string | null
+  protected _sortDir: PaginationDirection | null
+  protected _filter: PaginationFilter | null
 
   constructor(props: PaginationProps<PaginationFilter> = {}) {
-    this.page = props.page ? props.page : 0
-    this.perPage = props.perPage ? props.perPage : 0
-    this.sort = props.sort ? props.sort : null
-    this.sortDir = props.sortDir ? props.sortDir : null
-    this.filter = props.filter ? props.filter : null
+    this._page = props.page = 0
+    this._perPage = props.perPage = 15
+    this._sort = props.sort ?? null
+    this._sortDir = props.sortDir ?? null
+    this._filter = props.filter ?? null
   }
 
-  get page(): number | null | undefined {
+  get page() {
     return this._page
   }
 
@@ -43,7 +43,7 @@ export class PaginationRequest<PaginationFilter> {
     this._page = _perPage
   }
 
-  get sort(): string | null | undefined {
+  get sort(): string | null {
     return this._sort
   }
 
@@ -69,8 +69,10 @@ export class PaginationRequest<PaginationFilter> {
     return this._filter
   }
 
-  private set filter(value: PaginationFilter | null | string | undefined) {
+  private set filter(value: PaginationFilter | null) {
     this._filter =
-      value === null || value === undefined || value === '' ? null : `${value}`
+      value === null || value === undefined || value === ''
+        ? null
+        : (`${value}` as any)
   }
 }

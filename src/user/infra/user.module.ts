@@ -2,7 +2,7 @@ import { HashProvider } from '@/shared/application/providers/hash.provider'
 import { PrismaService } from '@/shared/infra/database/prisma/prima.service'
 import { Module } from '@nestjs/common'
 import { UserCreateService } from '../application/services/user-create.service'
-import { UserPrismaRepository } from '../domain/repositories/user.repository'
+import { UserRepository } from '../domain/repositories/user.repository'
 import { UserCreateController } from './controllers/user-create.controller'
 import { UserAuthController } from './controllers/user-auth.controller'
 import { AuthModule } from '@/auth/infra/auth.module'
@@ -20,7 +20,7 @@ import { UserIndexController } from './controllers/user-index.controller'
     {
       provide: 'UserRepository',
       useFactory: (prismaService: PrismaService) => {
-        return new UserPrismaRepository(prismaService)
+        return new UserRepository(prismaService)
       },
       inject: ['PrismaService'],
     },
@@ -31,7 +31,7 @@ import { UserIndexController } from './controllers/user-index.controller'
     {
       provide: UserCreateService,
       useFactory: (
-        userRepository: UserPrismaRepository,
+        userRepository: UserRepository,
         hashProvider: HashProvider,
       ) => {
         return new UserCreateService(userRepository, hashProvider)
@@ -40,10 +40,7 @@ import { UserIndexController } from './controllers/user-index.controller'
     },
     {
       provide: UserAuthService,
-      useFactory: (
-        userRepository: UserPrismaRepository,
-        hash: HashProvider,
-      ) => {
+      useFactory: (userRepository: UserRepository, hash: HashProvider) => {
         return new UserAuthService(userRepository, hash)
       },
       inject: ['UserRepository', 'HashProvider'],
