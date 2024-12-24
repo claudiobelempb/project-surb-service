@@ -31,8 +31,8 @@ export abstract class InMemoryPagnationRepository<E extends EntityDefault>
       items: itemsPaginated,
       currentPage: request.page,
       perPage: request.perPage,
-      sort: request.sort,
-      sortDir: request.sortDir,
+      sort: `${request.sort}`,
+      sortDir: `${request.sortDir}`,
       filter: request.filter,
       total: itemsFiltered.length,
     })

@@ -7,11 +7,16 @@ import { UserCreateController } from './controllers/user-create.controller'
 import { UserAuthController } from './controllers/user-auth.controller'
 import { AuthModule } from '@/auth/infra/auth.module'
 import { UserAuthService } from '../application/services/user-auth.service'
-import { UserIndexController } from './controllers/user-index.controller'
+import { UserFindAllController } from './controllers/user-findall.controller'
+import { UserFindAllService } from '../application/services/user-findall.service'
 
 @Module({
   imports: [AuthModule],
-  controllers: [UserCreateController, UserAuthController, UserIndexController],
+  controllers: [
+    UserCreateController,
+    UserAuthController,
+    UserFindAllController,
+  ],
   providers: [
     {
       provide: 'PrismaService',
@@ -44,6 +49,13 @@ import { UserIndexController } from './controllers/user-index.controller'
         return new UserAuthService(userRepository, hash)
       },
       inject: ['UserRepository', 'HashProvider'],
+    },
+    {
+      provide: UserFindAllService,
+      useFactory: (userRepository: UserRepository) => {
+        return new UserFindAllService(userRepository)
+      },
+      inject: ['UserRepository'],
     },
   ],
 })

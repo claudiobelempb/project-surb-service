@@ -1,24 +1,33 @@
 import { HashProvider } from '@/shared/application/providers/hash.provider'
+import { AppConflictException } from '@/shared/domain/exceptions/AppConflictException'
 import { AppBadRequestException } from '@/shared/infra/exeptions/AppBadRequestException'
-import { ConstantValidator } from '@/shared/utils/constants/ConstantValidator'
+import { ConstantException } from '@/shared/utils/constants/ConstantException'
+import { ValidatorConstant } from '@/shared/infra/constants/validator.contants'
 import { UserEntity } from '@/user/domain/entities/user.entity'
 import { UserRepository } from '@/user/domain/repositories/user.repository'
-import { UserType } from '@/user/types/user-type'
+import { UserRequest } from '@/user/infra/request/user.request'
 
 export class UserCreateService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hashProvider: HashProvider,
   ) {}
-  async execute(request: UserType.Request): Promise<UserType.Response> {
+  async execute(request: UserRequest.Create): Promise<UserEntity> {
     const { firstName, lastName, email, password } = request
     if (!firstName || !lastName || !email || !password) {
-      throw new AppBadRequestException(ConstantValidator.REQUIRED_FIELD)
+      throw new AppBadRequestException(ValidatorConstant.REQUIRED_FIELD)
     }
-    await this.userRepository.emailAlreadyExists(email)
+
+    const emailExist = await this.userRepository.emailAlreadyExists(email)
+
+    if (emailExist) {
+      throw new AppConflictException(ConstantException.EMAIL_EXIST)
+    }
     const hashPassword = await this.hashProvider.generateHash(password)
 
-    const entity = new UserEntity({ ...request, password: hashPassword })
+    const entity = new UserEntity(
+      Object.assign(request, { password: hashPassword }),
+    )
 
     return await this.userRepository.create(entity)
   }

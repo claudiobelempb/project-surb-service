@@ -59,24 +59,29 @@ export class UserRepository implements IUserRepository.IRepository {
     return UserMapper.toEntity(data)
   }
 
-  async findByEmail(email: string): Promise<UserEntity> {
-    throw new Error('Method not implemented.')
-    // const entity = await this.prisma.user.findUnique({
-    //   where: {
-    //     email,
-    //   },
-    // })
-    // return entity
+  async findByEmail(email: string): Promise<UserEntity | null> {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { email },
+      })
+      if (!user) {
+        return null
+      }
+      return UserMapper.toEntity(user)
+    } catch {
+      throw new AppNotFoundException(`UserModel not found using email ${email}`)
+    }
   }
 
-  async emailAlreadyExists(email: string): Promise<void> {
+  async emailAlreadyExists(email: string): Promise<boolean> {
     const user = await this.prisma.user.findUnique({
       where: { email },
     })
 
     if (user) {
-      throw new AppConflictException(ConstantException.EMAIL_EXIST)
+      return true
     }
+    return false
   }
 
   async findById(id: string): Promise<UserEntity | null> {
@@ -99,11 +104,22 @@ export class UserRepository implements IUserRepository.IRepository {
   }
 
   async update(entity: UserEntity): Promise<void> {
-    throw new Error('Method not implemented.')
+    this.findById(entity.id)
+    await this.prisma.user.update({
+      data: entity.toJSON(),
+      where: {
+        id: entity.id,
+      },
+    })
   }
 
   async delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.')
+    this.findById(id)
+    await this.prisma.user.delete({
+      where: {
+        id,
+      },
+    })
   }
 
   async show(id: string): Promise<UserEntity | null> {
@@ -114,12 +130,27 @@ export class UserRepository implements IUserRepository.IRepository {
     return null
   }
 
-  async findByIndex(id: string): Promise<UserEntity | undefined> {
-    throw new Error('Method not implemented.')
-  }
-
   async findAll(): Promise<UserEntity[]> {
     const users = await this.prisma.user.findMany()
     return users.map(e => UserMapper.toEntity(e))
+  }
+
+  async enable(id: string): Promise<void> {
+    this.findById(id)
+    await this.prisma.user.update({
+      data: { isActive: true },
+      where: {
+        id,
+      },
+    })
+  }
+  async disabled(id: string): Promise<void> {
+    this.findById(id)
+    await this.prisma.user.update({
+      data: { isActive: false },
+      where: {
+        id,
+      },
+    })
   }
 }

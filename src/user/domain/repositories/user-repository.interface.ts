@@ -17,7 +17,7 @@ export namespace IUserRepository {
       PaginationRequest,
       PaginationResponse
     > {
-    findByEmail(email: string): Promise<UserEntity>
-    emailAlreadyExists(email: string): Promise<void>
+    findByEmail(email: string): Promise<UserEntity | null>
+    emailAlreadyExists(email: string): Promise<void | boolean>
   }
 }

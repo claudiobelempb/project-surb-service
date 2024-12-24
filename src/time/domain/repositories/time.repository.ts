@@ -5,6 +5,12 @@ import { PrismaService } from '@/shared/infra/database/prisma/prima.service'
 
 export class TimeRepository implements ITimeRepository {
   constructor(private readonly prisma: PrismaService) {}
+  enable(id: string): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
+  disabled(id: string): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
   show(id: string): Promise<TimeEntity> {
     throw new Error('Method not implemented.')
   }

@@ -1,39 +1,21 @@
 import { EntityDefault } from '@/shared/domain/entities/default-entity'
-import { UserType } from '@/user/types/user-type'
 
-export class UserEntity extends EntityDefault<UserType.Props> {
-  constructor(props: UserType.Props, id?: string) {
+export type Props = {
+  firstName: string
+  lastName: string
+  email: string
+  password?: string
+  isActive?: boolean
+  createdAt?: Date
+  updatedAt?: Date | null
+}
+export class UserEntity extends EntityDefault<Props> {
+  constructor(props: Props, id?: string) {
     super(props, id)
     this.props.isActive = this.props.isActive ?? true
     this.props.createdAt = this.props.createdAt ?? new Date()
     this.props.updatedAt = this.props.createdAt ?? new Date()
   }
-
-  // update(value: UserType.UpdateProps) {
-  //   // UserEntiry.validate({
-  //   //   ...this.props,
-  //   //   firstName: value.firstName,
-  //   //   lastName: value.lastName,
-  //   // })
-  //   this.props.firstName = value.firstName
-  //   this.props.lastName = value.lastName
-  // }
-
-  // updatePassword(value: string) {
-  //   // UserEntiry.validate({
-  //   //   ...this.props,
-  //   //   password: value,
-  //   // })
-  //   this.props.password = value
-  // }
-
-  // updateIsActive(value: boolean) {
-  //   // UserEntiry.validate({
-  //   //   ...this.props,
-  //   //   active: value,
-  //   // })
-  //   this.props.isActive = value
-  // }
 
   get firstName() {
     return this.props.firstName
@@ -59,7 +41,7 @@ export class UserEntity extends EntityDefault<UserType.Props> {
     this.props.email = value
   }
 
-  get password() {
+  get password(): string | undefined {
     return this.props.password
   }
 

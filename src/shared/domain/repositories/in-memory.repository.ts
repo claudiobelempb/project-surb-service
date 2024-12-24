@@ -16,10 +16,6 @@ export abstract class InMemoryRepository<E extends EntityDefault>
     return this.findById(id)
   }
 
-  async findAll(): Promise<E[]> {
-    return this.items
-  }
-
   async update(entity: E): Promise<void> {
     await this.findById(entity.id)
     const index = this.items.findIndex(item => item.id === entity.id)
@@ -40,11 +36,21 @@ export abstract class InMemoryRepository<E extends EntityDefault>
     return entiry
   }
 
-  async findByIndex(id: string): Promise<E | undefined> {
-    const index = this.items.findIndex(item => item.id === id)
-    if (index >= 0) {
-      return this.items[index]
+  async findAll(): Promise<E[]> {
+    return this.items
+  }
+
+  async enable(id: string): Promise<void> {
+    const entiry = this.items.find(item => item.id === `${id}`)
+    if (!entiry) {
+      throw new AppNotFoundException('Entity not found...')
     }
-    return undefined
+  }
+
+  async disabled(id: string): Promise<void> {
+    const entiry = this.items.find(item => item.id === `${id}`)
+    if (!entiry) {
+      throw new AppNotFoundException('Entity not found...')
+    }
   }
 }

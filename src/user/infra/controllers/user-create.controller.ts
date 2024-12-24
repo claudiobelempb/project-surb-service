@@ -1,7 +1,7 @@
 import { JwtGuard } from '@/auth/application/guards/jwt.guard'
 import { ZodValidationPipe } from '@/shared/application/pipes/zod-validation-pipe'
+import { UserResponse } from '@/user/application/response/user.response'
 import { UserCreateService } from '@/user/application/services/user-create.service'
-import { UserEntity } from '@/user/domain/entities/user.entity'
 import {
   Body,
   Controller,
@@ -11,17 +11,20 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common'
-import { UserSchema } from '../schema/user.schema'
+import { UserRequest } from '../request/user.request'
+import { UserMapper } from '../mapper/user.mapper'
+import { UserEntity } from '@/user/domain/entities/user.entity'
 
 @Controller('admin/users')
-@UseGuards(JwtGuard)
+// @UseGuards(JwtGuard)
 export class UserCreateController {
   constructor(private readonly userCreateService: UserCreateService) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @UsePipes(new ZodValidationPipe(UserSchema.create))
-  async handle(@Body() body: UserSchema.Create): Promise<UserEntity> {
-    return this.userCreateService.execute(body)
+  @UsePipes(new ZodValidationPipe(UserRequest.create))
+  async handle(@Body() body: UserRequest.Create): Promise<UserResponse.User> {
+    const user = await this.userCreateService.execute(body)
+    return UserMapper.toResponse(user)
   }
 }
