@@ -1,12 +1,12 @@
 import { DynamicModule, Global, Module } from '@nestjs/common'
-import { AppEnvModule } from '../env-config/app-env.module'
+import { EnvModule } from '../env-config/env.module'
 import { ConfigService } from '@nestjs/config'
 import { PrismaService } from './prisma/prima.service'
 import { PrismaClient } from '@prisma/client'
 
 @Global()
 @Module({
-  imports: [AppEnvModule.forRoot()],
+  imports: [EnvModule.forRoot()],
   providers: [ConfigService, PrismaService],
   exports: [PrismaService],
 })

@@ -1,23 +1,26 @@
-import { HashProvider } from '@/shared/application/providers/hash.provider'
+import { AuthRequest } from '@/auth/infra/request/auth.request'
+import { HashProvider } from '@/shared/application/providers/hash-provider/hash.provider'
 import { AppUnauthorizedException } from '@/shared/domain/exceptions/AppUnauthorizedException'
 import { AppBadRequestException } from '@/shared/infra/exeptions/AppBadRequestException'
-import { AppInvalidCredentialsException } from '@/shared/infra/exeptions/AppInvalidCredentialsException'
 import { ConstantException } from '@/shared/utils/constants/ConstantException'
-import { UserEntity } from '@/user/domain/entities/user.entity'
+import { UserResponse } from '@/user/application/response/user.response'
 import { UserRepository } from '@/user/domain/repositories/user.repository'
+import { UserMapper } from '@/user/infra/mapper/user.mapper'
 import { Body } from '@nestjs/common'
 
-export class UserAuthService {
+export class SigninAuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly hashProvider: HashProvider,
+    private readonly hash: HashProvider,
   ) {}
 
-  async execute(@Body() { email, password }: UserEntity): Promise<UserEntity> {
-    if (!email || !password) {
+  async execute(
+    @Body() request: AuthRequest.Signin,
+  ): Promise<UserResponse.User> {
+    if (!request.email || !request.password) {
       throw new AppBadRequestException('Input data not provided')
     }
-    const entity = await this.userRepository.findByEmail(email)
+    const entity = await this.userRepository.findByEmail(request.email)
 
     if (!entity) {
       throw new AppUnauthorizedException(
@@ -25,9 +28,9 @@ export class UserAuthService {
       )
     }
 
-    const hashPasswordMatches = await this.hashProvider.compareHash(
-      password,
-      entity.password ? entity.password : '',
+    const hashPasswordMatches = await this.hash.compareHash(
+      request.password,
+      entity.password as string,
     )
 
     if (!hashPasswordMatches) {
@@ -36,6 +39,6 @@ export class UserAuthService {
       )
     }
 
-    return entity
+    return UserMapper.toResponse(entity)
   }
 }

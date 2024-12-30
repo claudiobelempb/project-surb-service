@@ -1,4 +1,3 @@
-import { HashProvider } from '@/shared/application/providers/hash.provider'
 import { AppConflictException } from '@/shared/domain/exceptions/AppConflictException'
 import { AppBadRequestException } from '@/shared/infra/exeptions/AppBadRequestException'
 import { ConstantException } from '@/shared/utils/constants/ConstantException'
@@ -6,6 +5,7 @@ import { ValidatorConstant } from '@/shared/infra/constants/validator.contants'
 import { UserEntity } from '@/user/domain/entities/user.entity'
 import { UserRepository } from '@/user/domain/repositories/user.repository'
 import { UserRequest } from '@/user/infra/request/user.request'
+import { HashProvider } from '@/shared/application/providers/hash-provider/hash.provider'
 
 export class UserCreateService {
   constructor(

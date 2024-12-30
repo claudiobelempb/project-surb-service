@@ -1,10 +1,12 @@
 import { EntityDefault } from '@/shared/domain/entities/default-entity'
+import { UserEntity } from '@/user/domain/entities/user.entity'
 
 export type TimeProps = {
   name: string
   isActive?: boolean
   createdAt?: Date
   updatedAt?: Date
+  user?: UserEntity
 }
 
 export class TimeEntity extends EntityDefault<TimeProps> {
@@ -13,6 +15,7 @@ export class TimeEntity extends EntityDefault<TimeProps> {
     this.props.isActive = props.isActive ?? true
     this.props.createdAt = props.createdAt ?? new Date()
     this.props.updatedAt = props.updatedAt ?? new Date()
+    this.props.user = props.user
   }
 
   get name() {
@@ -23,12 +26,16 @@ export class TimeEntity extends EntityDefault<TimeProps> {
     this.props.name = value
   }
 
-  get isActive() {
-    return this.props.isActive
+  get user() {
+    return this.props.user as UserEntity
   }
 
-  updateActive(value: boolean) {
-    this.props.isActive = value
+  set user(value: UserEntity) {
+    this.props.user = value
+  }
+
+  get isActive() {
+    return this.props.isActive
   }
 
   get createdAt() {

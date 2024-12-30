@@ -1,20 +1,24 @@
 import { DynamicModule, Module } from '@nestjs/common'
-import { ConfigModule, ConfigModuleOptions } from '@nestjs/config'
+import {
+  ConfigModule,
+  ConfigModuleOptions,
+  ConfigService,
+} from '@nestjs/config'
 
 import { join } from 'node:path'
-import { AppEnvService } from './app-env.service'
-import { appValidationEnvSchema } from './app-validation-env'
+import { EnvService } from './env.service'
+import { envValidation } from './env.validation'
 
 @Module({
   imports: [ConfigModule],
-  providers: [AppEnvService],
-  exports: [AppEnvService],
+  providers: [EnvService],
+  exports: [EnvService],
 })
-export class AppEnvModule extends ConfigModule {
+export class EnvModule extends ConfigModule {
   static forRoot(options: ConfigModuleOptions = {}): Promise<DynamicModule> {
     return super.forRoot({
       ...options,
-      validate: env => appValidationEnvSchema.parse(env),
+      validate: env => envValidation.parse(env),
       envFilePath: [
         join(__dirname, `../../../../.env.${process.env.NODE_ENV}`),
       ],

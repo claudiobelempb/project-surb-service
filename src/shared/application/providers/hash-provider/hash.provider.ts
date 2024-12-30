@@ -1,5 +1,6 @@
-import { IBcryptjs } from '@/shared/application/interfaces/hash.interface'
 import { compare, hash } from 'bcryptjs'
+import { IBcryptjs } from './interfaces/hash.interface'
+
 export class HashProvider implements IBcryptjs {
   async generateHash(
     playload: string,

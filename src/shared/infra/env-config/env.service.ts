@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { IAppEnvService } from './app-env.interface'
+import { IEnvService } from './env.interface'
 
 @Injectable()
-export class AppEnvService implements IAppEnvService {
+export class EnvService implements IEnvService {
   constructor(private readonly config: ConfigService) {}
-  geJwtPrivateKey(): string {
+  getJwtPrivateKey(): string {
     return this.config.get<string>('JWT_PRIVATE_KEY', {
       infer: true,
     }) as string
   }
-  geJwtPublicKey(): string {
+  getJwtPublicKey(): string {
     return this.config.get<string>('JWT_PUBLIC_KEY', {
       infer: true,
     }) as string

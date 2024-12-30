@@ -1,10 +1,10 @@
 import { validateSync } from 'class-validator'
 import {
   FieldErrors,
-  IValidatorFields,
-} from '../interfaces/validator.interface'
+  IValidProvider,
+} from './interfaces/valid-provider.interface'
 
-export abstract class ClassValidatorFields<T> implements IValidatorFields<T> {
+export abstract class ValidProvider<T> implements IValidProvider<T> {
   errors: FieldErrors = null
   validatedData: T = null as any
 

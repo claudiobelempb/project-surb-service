@@ -1,22 +1,16 @@
-import { HashProvider } from '@/shared/application/providers/hash.provider'
 import { PrismaService } from '@/shared/infra/database/prisma/prima.service'
+import { EnvModule } from '@/shared/infra/env-config/env.module'
 import { Module } from '@nestjs/common'
 import { UserCreateService } from '../application/services/user-create.service'
+import { UserFindAllService } from '../application/services/user-findall.service'
 import { UserRepository } from '../domain/repositories/user.repository'
 import { UserCreateController } from './controllers/user-create.controller'
-import { UserAuthController } from './controllers/user-auth.controller'
-import { AuthModule } from '@/auth/infra/auth.module'
-import { UserAuthService } from '../application/services/user-auth.service'
 import { UserFindAllController } from './controllers/user-findall.controller'
-import { UserFindAllService } from '../application/services/user-findall.service'
+import { HashProvider } from '@/shared/application/providers/hash-provider/hash.provider'
 
 @Module({
-  imports: [AuthModule],
-  controllers: [
-    UserCreateController,
-    UserAuthController,
-    UserFindAllController,
-  ],
+  imports: [EnvModule],
+  controllers: [UserCreateController, UserFindAllController],
   providers: [
     {
       provide: 'PrismaService',
@@ -44,18 +38,24 @@ import { UserFindAllService } from '../application/services/user-findall.service
       inject: ['UserRepository', 'HashProvider'],
     },
     {
-      provide: UserAuthService,
-      useFactory: (userRepository: UserRepository, hash: HashProvider) => {
-        return new UserAuthService(userRepository, hash)
-      },
-      inject: ['UserRepository', 'HashProvider'],
-    },
-    {
       provide: UserFindAllService,
       useFactory: (userRepository: UserRepository) => {
         return new UserFindAllService(userRepository)
       },
       inject: ['UserRepository'],
+    },
+  ],
+  exports: [
+    {
+      provide: 'PrismaService',
+      useClass: PrismaService,
+    },
+    {
+      provide: 'UserRepository',
+      useFactory: (prismaService: PrismaService) => {
+        return new UserRepository(prismaService)
+      },
+      inject: ['PrismaService'],
     },
   ],
 })

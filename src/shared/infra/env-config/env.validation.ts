@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const appValidationEnvSchema = z.object({
+export const envValidation = z.object({
   APP_PORT: z.coerce.number().optional().default(3333),
   NODE_ENV: z.string(),
   DATABASE_URL: z.string().url(),
@@ -16,4 +16,4 @@ export const appValidationEnvSchema = z.object({
   DB_SYNCHRONIZE: z.coerce.number().optional().default(0),
 })
 
-export type AppValidationEnvType = z.infer<typeof appValidationEnvSchema>
+export type EnvValidation = z.infer<typeof envValidation>

@@ -1,4 +1,4 @@
-export type IAppEnvService = {
+export type IEnvService = {
   getAppPort(): number
   getNodeEnv(): string
   getJwtSecret(): string
@@ -12,6 +12,6 @@ export type IAppEnvService = {
   getDatabase(): string
   getDbAutoLoadEntities(): boolean
   getDbSynchonize(): boolean
-  geJwtPrivateKey(): string
-  geJwtPublicKey(): string
+  getJwtPrivateKey(): string
+  getJwtPublicKey(): string
 }
